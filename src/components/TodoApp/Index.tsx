@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useReducer } from 'react';
+import { useEffect, useReducer, useRef } from 'react';
 import AddTodo from './AddTodo.tsx';
 import TodoList from './TodoList.tsx';
 import todoReducer from '../../reducers/todoReducer.ts';
@@ -9,7 +9,7 @@ export default function TodoApp() {
   
   const [todos, dispatch] = useReducer(todoReducer, []);
 
-
+  const isFetching = useRef(false);
 
   async function handleAddTodo(newTodoToBeAdded: Todo) {    
     dispatch({
@@ -32,32 +32,89 @@ export default function TodoApp() {
     });
   }
 
-  useEffect(() => {
-    const loadTodosData = async () => {
-      const response = await fetch('http://localhost:8000/api/todos/getTodos', {
-        method: 'GET', 
-        headers: {
-          'Content-Type': 'application/json',
-          'authorization': `${localStorage.getItem('token')}`
+  function updateTodoList(todo: Todo){
+    dispatch({
+      type: 'updated', 
+      todo: todo
+    })
+  }
+
+  const loadTodosData = async () => {
+    
+    dispatch({
+      type: 'clear',
+      todo: {id: 0, description: '', done: false, priority: 0}
+    })
+
+    const response = await fetch('http://localhost:8000/api/todos/getTodos', {
+      method: 'GET', 
+      headers: {
+        'Content-Type': 'application/json',
+        'authorization': `${localStorage.getItem('token')}`
+      }
+    })
+    if(response.ok){
+      const data = await response.json();
+      console.log('TODOS DATA: ', data)
+
+      const TodosToBeAdded: Todo[] = await data.todos.map((todo: any) => {
+        return {
+          description: todo.description, 
+          id: todo.task_id, 
+          priority: todo.priority, 
+          done: todo.done
         }
       })
-      if(response.ok){
-        const data = await response.json();
-        console.log('TODOS DATA: ', data)
 
-        data.todos.map((todo: any) => {
-          const newTodoToBeAdded: Todo = {
-            description: todo.description, 
-            id: todo.task_id, 
-            priority: todo.priority, 
-            done: todo.done
-          }
-          handleAddTodo(newTodoToBeAdded);
-        })
-      }
+      TodosToBeAdded.map((todo) => {
+        handleAddTodo(todo);
+      })
+
+      console.log('TODOS STATE: ', todos)
     }
+    isFetching.current = false;
+  }
+
+  useEffect(() => {
+    // const loadTodosData = async () => {
+    //   const response = await fetch('http://localhost:8000/api/todos/getTodos', {
+    //     method: 'GET', 
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //       'authorization': `${localStorage.getItem('token')}`
+    //     }
+    //   })
+    //   if(response.ok){
+    //     const data = await response.json();
+    //     console.log('TODOS DATA: ', data)
+
+    //     const TodosToBeAdded: Todo[] = await data.todos.map((todo: any) => {
+    //       return {
+    //         description: todo.description, 
+    //         id: todo.task_id, 
+    //         priority: todo.priority, 
+    //         done: todo.done
+    //       }
+    //     })
+
+    //     TodosToBeAdded.map((todo) => {
+    //       handleAddTodo(todo);
+    //     })
+
+    //     console.log('TODOS STATE: ', todos)
+    //   }
+    //   isFetching.current = false;
+    // }
+
+    if(isFetching.current) return
+
+    isFetching.current = true;
     loadTodosData();
   }, [])
+
+  useEffect(() => {
+    console.log('TODOS STATE (updated): ', todos)
+  }, [todos])
 
   return (
     <>
@@ -75,6 +132,7 @@ export default function TodoApp() {
         todos={todos}
         onChangeTodo={handleChangeTodo}
         onDeleteTodo={handleDeleteTodo}
+        updateTodosData={loadTodosData}
       />
       </Box>
     </Box>

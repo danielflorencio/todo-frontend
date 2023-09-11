@@ -5,8 +5,8 @@ import Tab from '@mui/material/Tab';
 import { useState } from "react";
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
-import CreateIcon from '@mui/icons-material/Create';
 import TodoItem from "./TodoItem";
+import FormatAlignJustifyIcon from '@mui/icons-material/FormatAlignJustify';
 interface TabPanelProps {
     children?: React.ReactNode;
     index: number;
@@ -45,16 +45,20 @@ export default function TodoList(
     {
         todos, 
         onChangeTodo,
-        onDeleteTodo
+        onDeleteTodo,
+        updateTodosData
     }:
     {
         todos: Todo[],
         onChangeTodo: (todo: Todo) => void,
-        onDeleteTodo: (todo: Todo) => void
+        onDeleteTodo: (todo: Todo) => void,
+        updateTodosData: () => void
     }
 ){
 
     const [value, setValue] = useState(0);
+
+    console.log("TODOS ON TODO LIST: ", todos)
 
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
       setValue(newValue);
@@ -64,7 +68,7 @@ export default function TodoList(
         <>
             <Box sx={{ borderBottom: 1, borderColor: 'divider', display: 'flex', justifyContent: 'center'}}>
             <Tabs value={value} onChange={handleChange} aria-label="icon label tabs example">
-                <Tab icon={<CreateIcon/>} label="All Tasks" />
+                <Tab icon={<FormatAlignJustifyIcon/>} label="All Tasks" />
                 <Tab icon={<ClearIcon/>} label="To Do" />
                 <Tab icon={<CheckIcon/>} label="Done" />
             </Tabs>
@@ -72,16 +76,17 @@ export default function TodoList(
             <CustomTabPanel value={value} index={0}>
                 <TableContainer component={Paper} >
                     <Table size='small'>
-                        <TableHead>
+                        {/* <TableHead>
                             <TableRow>
-                                <TableCell align='center'>Status</TableCell>
-                                <TableCell align='center'>Description</TableCell>
-                                <TableCell align='center'>Priority</TableCell>
+                                <TableCell align='center'></TableCell>
+                                <TableCell align='center'></TableCell>
+                                <TableCell align='center'></TableCell>
+                                <TableCell align='center'></TableCell>
                             </TableRow>
-                        </TableHead>
+                        </TableHead> */}
                         {
-                            todos.map((todo) => (
-                                <TodoItem todo={todo} todoStatus={'all'}/>
+                            todos.map((todo, index) => (
+                                <TodoItem updateTodosData={updateTodosData}key={index} todo={todo} todoStatus={'all'}/>
                             ))
                         }
                     </Table>
@@ -90,16 +95,9 @@ export default function TodoList(
             <CustomTabPanel value={value} index={1}>
                 <TableContainer component={Paper} >
                     <Table size='small'>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell align='center'>Status</TableCell>
-                                <TableCell align='center'>Description</TableCell>
-                                <TableCell align='center'>Priority</TableCell>
-                            </TableRow>
-                        </TableHead>
                         {
-                            todos.map((todo) => (
-                                <TodoItem todo={todo} todoStatus={'todo'}/>
+                            todos.map((todo, index) => (
+                                <TodoItem updateTodosData={updateTodosData} key={index} todo={todo} todoStatus={'todo'}/>
                             ))
                         }
                     </Table>
@@ -108,16 +106,9 @@ export default function TodoList(
             <CustomTabPanel value={value} index={2}>
                 <TableContainer component={Paper} >
                     <Table size='small'>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell align='center'>Status</TableCell>
-                                <TableCell align='center'>Description</TableCell>
-                                <TableCell align='center'>Priority</TableCell>
-                            </TableRow>
-                        </TableHead>
                         {
-                            todos.map((todo) => (
-                                <TodoItem todo={todo} todoStatus={'done'}/>
+                            todos.map((todo, index) => (
+                                <TodoItem updateTodosData={updateTodosData} key={index} todo={todo} todoStatus={'done'}/>
                             ))
                         }
                     </Table>
