@@ -4,12 +4,24 @@ import AddTodo from './AddTodo.tsx';
 import TodoList from './TodoList.tsx';
 import todoReducer from '../../reducers/todoReducer.ts';
 import { Todo } from '../../types/todo.ts';
-import { AppBar, Box, Toolbar, Typography } from '@mui/material';
+import { AppBar, Box, Button, Toolbar, Typography } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '../../hooks.ts';
+import { logout } from '../../features/sessionControl/sessionSlice.ts';
 export default function TodoApp() {
   
   const [todos, dispatch] = useReducer(todoReducer, []);
 
   const isFetching = useRef(false);
+
+  const navigate = useNavigate();
+
+  const reduxDispatch = useAppDispatch();
+
+  const handleLogout = async () => {
+      reduxDispatch(logout());
+      navigate('/login');
+  }
 
   async function handleAddTodo(newTodoToBeAdded: Todo) {    
     dispatch({
@@ -122,14 +134,13 @@ export default function TodoApp() {
 
   return (
     <>
-    <AppBar position="fixed" sx={{padding: 2}}>
-      {/* <Toolbar> */}
-        Test
-      {/* </Toolbar> */}
+    <Toolbar>
+    <AppBar position="fixed" sx={{padding: 1, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+      <Button variant='contained' sx={{width: 'fit-content'}} onClick={handleLogout}>Logout</Button>
     </AppBar>
-    <Toolbar/>
-    <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'center', paddingTop: 2}}>
-      <Box sx={{width: '400px'}}>
+    </Toolbar>
+    <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'center', paddingTop: 1}}>
+      <Box sx={{sm: {width: '100%'}, md: {width: '400px'}}}>
       <Typography variant='h4' sx={{textAlign: 'center'}}>Painel de Tarefas</Typography>
       <AddTodo onAddTask={handleAddTodo} />
       <TodoList

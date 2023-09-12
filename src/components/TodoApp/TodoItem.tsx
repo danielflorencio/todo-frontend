@@ -5,13 +5,9 @@ import CreateIcon from '@mui/icons-material/Create';
 
 export default function TodoItem({todo, todoStatus, updateTodosData}: {todo: Todo, todoStatus: string, updateTodosData: () => void}){
     
-    // const [todo.done, setIsChecked] = useState<boolean>(todo.done);
     const [priority, setPriority] = useState<number>(todo.priority);
     const [descriptionMode, setDescriptionMode] = useState<'show' | 'edit'>('show');
     const [descriptionInput, setDescriptionIput] = useState(todo.description); 
-
-
-    // console.log(`Todo Id ${todo.id} isDone: ${todo.done} - todo.done: ${todo.done}`);
 
     const handleChangeIsChecked = async () => {   
         const changeIsCheckedStatus = async () => {
@@ -34,6 +30,30 @@ export default function TodoItem({todo, todoStatus, updateTodosData}: {todo: Tod
             }
         }
         await changeIsCheckedStatus();
+    }
+
+    const handleUpdateTodoDescription = async () => {   
+        const updateTodoDescription = async () => {
+            const response = await fetch(`http://localhost:8000/api/todos/editTodo?id=${todo.id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'authorization': `${localStorage.getItem('token')}`
+                }, 
+                body: JSON.stringify({
+                    description: descriptionInput, 
+                    done: todo.done, 
+                    priority: todo.priority,
+                })
+            })
+            console.log('RESPONSE ON HANDLECHANGEISCHECKED: ', response)
+            if(response.ok){
+                console.log('RESPONSE ON HANDLECHANGEISCHECKED: ', response)
+                updateTodosData();
+                setDescriptionMode('show');
+            }
+        }
+        await updateTodoDescription();
     }
 
     const handleModeChange = () => {
@@ -60,12 +80,12 @@ export default function TodoItem({todo, todoStatus, updateTodosData}: {todo: Tod
                                 <TextField
                                 value={descriptionInput}
                                 onChange={(e) => setDescriptionIput(e.target.value)}
-                                onBlur={() => handleModeChange()}
+                                onBlur={() => handleUpdateTodoDescription()}
                                 />        
                             )
                         }                         
                     </TableCell>
-                    <TableCell align='center'>
+                    <TableCell align='right'>
                     <IconButton onClick={handleModeChange}>
                         <CreateIcon></CreateIcon>
                     </IconButton>
