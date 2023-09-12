@@ -1,15 +1,16 @@
 'use client'
-import { useEffect, useReducer, useRef } from 'react';
+import { useEffect, useReducer, useRef, useState } from 'react';
 import AddTodo from './AddTodo.tsx';
 import TodoList from './TodoList.tsx';
 import todoReducer from '../../reducers/todoReducer.ts';
 import { Todo } from '../../types/todo.ts';
-import { AppBar, Box, Button, Toolbar, Typography } from '@mui/material';
+import { AppBar, Box, Button, MenuItem, TextField, Toolbar, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks.ts';
 import { logout } from '../../features/sessionControl/sessionSlice.ts';
 export default function TodoApp() {
-  
+
+  const [showPriorities, setShowPriorities] = useState<number>(0);
   const [todos, dispatch] = useReducer(todoReducer, []);
 
   const isFetching = useRef(false);
@@ -67,7 +68,6 @@ export default function TodoApp() {
     })
     if(response.ok){
       const data = await response.json();
-      console.log('TODOS DATA: ', data)
 
       let TodosToBeAdded: Todo[] = await data.todos.map((todo: any) => {
         return {
@@ -84,53 +84,17 @@ export default function TodoApp() {
         handleAddTodo(todo);
       })
 
-      
-
-      console.log('TODOS STATE: ', todos)
     }
     isFetching.current = false;
   }
 
   useEffect(() => {
-    // const loadTodosData = async () => {
-    //   const response = await fetch('http://localhost:8000/api/todos/getTodos', {
-    //     method: 'GET', 
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //       'authorization': `${localStorage.getItem('token')}`
-    //     }
-    //   })
-    //   if(response.ok){
-    //     const data = await response.json();
-    //     console.log('TODOS DATA: ', data)
-
-    //     const TodosToBeAdded: Todo[] = await data.todos.map((todo: any) => {
-    //       return {
-    //         description: todo.description, 
-    //         id: todo.task_id, 
-    //         priority: todo.priority, 
-    //         done: todo.done
-    //       }
-    //     })
-
-    //     TodosToBeAdded.map((todo) => {
-    //       handleAddTodo(todo);
-    //     })
-
-    //     console.log('TODOS STATE: ', todos)
-    //   }
-    //   isFetching.current = false;
-    // }
 
     if(isFetching.current) return
 
     isFetching.current = true;
     loadTodosData();
   }, [])
-
-  useEffect(() => {
-    console.log('TODOS STATE (updated): ', todos)
-  }, [todos])
 
   return (
     <>
@@ -142,12 +106,21 @@ export default function TodoApp() {
     <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'center', paddingTop: 1}}>
       <Box sx={{sm: {width: '100%'}, md: {width: '400px'}}}>
       <Typography variant='h4' sx={{textAlign: 'center'}}>Painel de Tarefas</Typography>
-      <AddTodo onAddTask={handleAddTodo} />
+      <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'center', paddingTop: 4, gap: 2}}>
+        <AddTodo onAddTask={handleAddTodo} />
+        <TextField value={showPriorities} onChange={(e) => setShowPriorities(Number(e.target.value))} sx={{width: 'fit-content'}} size='small' select label='Show priorities'>
+          <MenuItem value={0}>Show all</MenuItem>
+          <MenuItem value={1}>Show high</MenuItem>
+          <MenuItem value={2}>Show average</MenuItem>
+          <MenuItem value={3}>Show low</MenuItem>
+        </TextField>
+      </Box>
       <TodoList
         todos={todos}
         onChangeTodo={handleChangeTodo}
         onDeleteTodo={handleDeleteTodo}
         updateTodosData={loadTodosData}
+        showPriority={showPriorities}
       />
       </Box>
     </Box>

@@ -1,4 +1,4 @@
-import { Box, Paper, Table, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material"
+import { Box, Paper, Table, TableContainer } from "@mui/material"
 import { Todo } from "../../types/todo"
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -46,19 +46,19 @@ export default function TodoList(
         todos, 
         onChangeTodo,
         onDeleteTodo,
-        updateTodosData
+        updateTodosData,
+        showPriority
     }:
     {
         todos: Todo[],
         onChangeTodo: (todo: Todo) => void,
         onDeleteTodo: (todo: Todo) => void,
-        updateTodosData: () => void
+        updateTodosData: () => void,
+        showPriority: number
     }
 ){
 
     const [value, setValue] = useState(0);
-
-    console.log("TODOS ON TODO LIST: ", todos)
 
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
       setValue(newValue);
@@ -86,7 +86,9 @@ export default function TodoList(
                         </TableHead> */}
                         {
                             todos.map((todo, index) => (
-                                <TodoItem updateTodosData={updateTodosData}key={index} todo={todo} todoStatus={'all'}/>
+                                showPriority === 0 || showPriority === todo.priority ? (
+                                    <TodoItem updateTodosData={updateTodosData}key={index} todo={todo} todoStatus={'all'}/>
+                                ) : <></>
                             ))
                         }
                     </Table>
@@ -97,7 +99,9 @@ export default function TodoList(
                     <Table size='small'>
                         {
                             todos.map((todo, index) => (
-                                <TodoItem updateTodosData={updateTodosData} key={index} todo={todo} todoStatus={'todo'}/>
+                                showPriority === 0 || showPriority === todo.priority ? (
+                                    <TodoItem updateTodosData={updateTodosData}key={index} todo={todo} todoStatus={'todo'}/>
+                                ) : <></>
                             ))
                         }
                     </Table>
@@ -108,7 +112,9 @@ export default function TodoList(
                     <Table size='small'>
                         {
                             todos.map((todo, index) => (
-                                <TodoItem updateTodosData={updateTodosData} key={index} todo={todo} todoStatus={'done'}/>
+                                showPriority === 0 || showPriority === todo.priority ? (
+                                    <TodoItem updateTodosData={updateTodosData}key={index} todo={todo} todoStatus={'done'}/>
+                                ) : <></>
                             ))
                         }
                     </Table>

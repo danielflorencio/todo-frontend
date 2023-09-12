@@ -10,18 +10,6 @@ export default function todoReducer(todos: Todo[], action: TodoActionProps) {
       case 'clear': {
         return []
       }
-      // case 'update': {
-      //   const newTodoState: Todo | undefined= todos.find((todo: Todo) => todo.id === action.todo.id);
-      //   return [{
-      //     ...newTodoState, 
-      //       description: action.todo.description, 
-      //       done: action.todo.done, 
-      //       priority: action.todo.priority
-      //   }]
-      //   // let newTodoState = todos.filter((todo) => todo.id !== action.todo.id);
-      //   // newTodoState = action.todo;
-      //   // return [...newTodoState];
-      // }
       case 'added': {
         return [
           ...todos,

@@ -14,7 +14,6 @@ export default function AddTodo(
     const [open, setOpen] = useState<boolean>(false);
     const [todoDescriptionInput, setTodoDescriptionInput] = useState('');
     const [priorityInput, setPriorityInput] = useState(1);
-    
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -62,7 +61,7 @@ export default function AddTodo(
     
     return(
         <>
-        <Button variant="outlined" color='success' sx={{width: '100%', marginTop: 1}} onClick={handleClickOpen}>
+        <Button variant="outlined" color='success' sx={{height: 1, padding: 0.85}} onClick={handleClickOpen}>
         Add Todo
         </Button>
         <Dialog open={open} onClose={handleClose}>

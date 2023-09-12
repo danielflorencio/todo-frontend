@@ -1,6 +1,6 @@
-import { Button, Checkbox, IconButton, MenuItem, TableCell, TableRow, TextField } from "@mui/material";
+import { Button, Checkbox, IconButton, MenuItem, Table, TableCell, TableRow, TextField } from "@mui/material";
 import { Todo } from "../../types/todo";
-import { useState } from "react";
+import React, { useState } from "react";
 import CreateIcon from '@mui/icons-material/Create';
 
 export default function TodoItem({todo, todoStatus, updateTodosData}: {todo: Todo, todoStatus: string, updateTodosData: () => void}){
@@ -23,36 +23,38 @@ export default function TodoItem({todo, todoStatus, updateTodosData}: {todo: Tod
                     priority: todo.priority,
                 })
             })
-            console.log('RESPONSE ON HANDLECHANGEISCHECKED: ', response)
             if(response.ok){
-                console.log('RESPONSE ON HANDLECHANGEISCHECKED: ', response)
                 updateTodosData();
             }
         }
         await changeIsCheckedStatus();
     }
 
-    const handleUpdateTodoDescription = async () => {   
-        const updateTodoDescription = async () => {
-            const response = await fetch(`http://localhost:8000/api/todos/editTodo?id=${todo.id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'authorization': `${localStorage.getItem('token')}`
-                }, 
-                body: JSON.stringify({
-                    description: descriptionInput, 
-                    done: todo.done, 
-                    priority: todo.priority,
-                })
+    const updateTodoDescription = async () => {
+        const response = await fetch(`http://localhost:8000/api/todos/editTodo?id=${todo.id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'authorization': `${localStorage.getItem('token')}`
+            }, 
+            body: JSON.stringify({
+                description: descriptionInput, 
+                done: todo.done, 
+                priority: todo.priority,
             })
-            console.log('RESPONSE ON HANDLECHANGEISCHECKED: ', response)
-            if(response.ok){
-                console.log('RESPONSE ON HANDLECHANGEISCHECKED: ', response)
-                updateTodosData();
-                setDescriptionMode('show');
-            }
+        })
+        if(response.ok){
+            updateTodosData();
+            setDescriptionMode('show');
         }
+    }
+
+    const handleUpdateTodoDescription = async () => {   
+        await updateTodoDescription();
+    }
+
+    const handleUpdateTodoDescriptionEvent = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
         await updateTodoDescription();
     }
 
@@ -77,16 +79,18 @@ export default function TodoItem({todo, todoStatus, updateTodosData}: {todo: Tod
                             descriptionMode === 'show' ? (
                                 <>{todo.description}</>
                             ) : (
+                                <form onSubmit={(e) => handleUpdateTodoDescriptionEvent(e)}>
                                 <TextField
                                 value={descriptionInput}
                                 onChange={(e) => setDescriptionIput(e.target.value)}
                                 onBlur={() => handleUpdateTodoDescription()}
-                                />        
+                                />
+                                </form>     
                             )
                         }                         
                     </TableCell>
                     <TableCell align='right'>
-                    <IconButton onClick={handleModeChange}>
+                    <IconButton type='submit' onClick={handleModeChange}>
                         <CreateIcon></CreateIcon>
                     </IconButton>
                     </TableCell>
@@ -116,12 +120,24 @@ export default function TodoItem({todo, todoStatus, updateTodosData}: {todo: Tod
                                 <Checkbox checked={todo.done} value={todo.done} onClick={() => handleChangeIsChecked()}/>
                             </TableCell>
                             <TableCell align='center'>
-                                {todo.description}
+                                {
+                                    descriptionMode === 'show' ? (
+                                        <>{todo.description}</>
+                                    ) : (
+                                        <form onSubmit={(e) => handleUpdateTodoDescriptionEvent(e)}>
+                                        <TextField
+                                        value={descriptionInput}
+                                        onChange={(e) => setDescriptionIput(e.target.value)}
+                                        onBlur={() => handleUpdateTodoDescription()}
+                                        />
+                                        </form>
+                                    )
+                                }                         
                             </TableCell>
-                            <TableCell align='center'>
-                                <IconButton onClick={handleModeChange} >
-                                    <CreateIcon></CreateIcon>
-                                </IconButton>
+                            <TableCell align='right'>
+                            <IconButton onClick={handleModeChange}>
+                                <CreateIcon></CreateIcon>
+                            </IconButton>
                             </TableCell>
                             <TableCell align='right'>
                                 <TextField
@@ -152,12 +168,7 @@ export default function TodoItem({todo, todoStatus, updateTodosData}: {todo: Tod
                                 <Checkbox checked={todo.done} value={todo.done} onClick={() => handleChangeIsChecked()}/>
                             </TableCell>
                             <TableCell align='center'>{todo.description}</TableCell>
-                            <TableCell align='center'>
-                            <TableCell align='center'>
-                                <IconButton onClick={handleModeChange} >
-                                    <CreateIcon></CreateIcon>
-                                </IconButton>
-                            </TableCell>
+
                             <TableCell align='right'>
                                 <TextField
                                 disabled
@@ -171,7 +182,6 @@ export default function TodoItem({todo, todoStatus, updateTodosData}: {todo: Tod
                                     <MenuItem value={3}>Low</MenuItem>
                                 </TextField>
                             </TableCell>    
-                            </TableCell> 
                         </TableRow>
                     ) : (
                         <></>
