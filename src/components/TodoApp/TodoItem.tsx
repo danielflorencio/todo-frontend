@@ -1,4 +1,4 @@
-import { Button, Checkbox, MenuItem, TableCell, TableRow, TextField } from "@mui/material";
+import { Button, Checkbox, IconButton, MenuItem, TableCell, TableRow, TextField } from "@mui/material";
 import { Todo } from "../../types/todo";
 import { useState } from "react";
 import CreateIcon from '@mui/icons-material/Create';
@@ -66,9 +66,9 @@ export default function TodoItem({todo, todoStatus, updateTodosData}: {todo: Tod
                         }                         
                     </TableCell>
                     <TableCell align='center'>
-                    <Button variant="outlined" onClick={handleModeChange} startIcon={<CreateIcon />}>
-                        Edit
-                    </Button>
+                    <IconButton onClick={handleModeChange}>
+                        <CreateIcon></CreateIcon>
+                    </IconButton>
                     </TableCell>
                     <TableCell align='right'>
                         <TextField
@@ -76,6 +76,7 @@ export default function TodoItem({todo, todoStatus, updateTodosData}: {todo: Tod
                         value={priority}
                         onChange={(e) => setPriority(Number(e.target.value))}
                         label='Priority'
+                        disabled={todo.done}
                         >
                             <MenuItem value={1}>High</MenuItem>
                             <MenuItem value={2}>Average</MenuItem>
@@ -96,6 +97,11 @@ export default function TodoItem({todo, todoStatus, updateTodosData}: {todo: Tod
                             </TableCell>
                             <TableCell align='center'>
                                 {todo.description}
+                            </TableCell>
+                            <TableCell align='center'>
+                                <IconButton onClick={handleModeChange} >
+                                    <CreateIcon></CreateIcon>
+                                </IconButton>
                             </TableCell>
                             <TableCell align='right'>
                                 <TextField
@@ -127,6 +133,11 @@ export default function TodoItem({todo, todoStatus, updateTodosData}: {todo: Tod
                             </TableCell>
                             <TableCell align='center'>{todo.description}</TableCell>
                             <TableCell align='center'>
+                            <TableCell align='center'>
+                                <IconButton onClick={handleModeChange} >
+                                    <CreateIcon></CreateIcon>
+                                </IconButton>
+                            </TableCell>
                             <TableCell align='right'>
                                 <TextField
                                 disabled

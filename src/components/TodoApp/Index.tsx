@@ -57,7 +57,7 @@ export default function TodoApp() {
       const data = await response.json();
       console.log('TODOS DATA: ', data)
 
-      const TodosToBeAdded: Todo[] = await data.todos.map((todo: any) => {
+      let TodosToBeAdded: Todo[] = await data.todos.map((todo: any) => {
         return {
           description: todo.description, 
           id: todo.task_id, 
@@ -66,9 +66,13 @@ export default function TodoApp() {
         }
       })
 
-      TodosToBeAdded.map((todo) => {
+      let SortedTodosToBeAdded = TodosToBeAdded.sort((a, b) => a.priority - b.priority);
+
+      SortedTodosToBeAdded.map((todo) => {
         handleAddTodo(todo);
       })
+
+      
 
       console.log('TODOS STATE: ', todos)
     }
