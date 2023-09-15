@@ -1,6 +1,5 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.tsx'
 import './index.css'
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
@@ -12,8 +11,7 @@ import ProtectedRoute from './helpers/ProtectedRoute.tsx';
 import { store } from './store'
 import { Provider } from 'react-redux'
 import TodoApp from './components/TodoApp/Index.tsx';
-import { Navigate, RouterProvider, createBrowserRouter} from 'react-router-dom'
-import { Container, CssBaseline } from '@mui/material';
+import { RouterProvider, createBrowserRouter} from 'react-router-dom'
 
 const router = createBrowserRouter([
   {

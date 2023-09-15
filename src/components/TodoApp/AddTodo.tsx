@@ -27,7 +27,7 @@ export default function AddTodo(
         e.preventDefault();
         if(todoDescriptionInput !== ''){
 
-            const response = await fetch('http://localhost:8000/api/todos/create', {
+            const response = await fetch('http://18.144.133.195:8000/api/todos/create', {
             method: 'POST', 
             headers: {
                 'Content-Type': 'application/json',

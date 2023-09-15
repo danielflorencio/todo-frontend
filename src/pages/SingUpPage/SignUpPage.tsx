@@ -3,8 +3,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -15,18 +13,18 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { UserData } from '../../types/userData';
 import { useNavigate } from 'react-router-dom';
 
-function Copyright(props: any) {
-    return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+// function Copyright(props: any) {
+//     return (
+//     <Typography variant="body2" color="text.secondary" align="center" {...props}>
+//       {'Copyright © '}
+//       <Link color="inherit" href="https://mui.com/">
+//         Your Website
+//       </Link>{' '}
+//       {new Date().getFullYear()}
+//       {'.'}
+//     </Typography>
+//   );
+// }
 
 const theme = createTheme();
 
@@ -44,7 +42,7 @@ export default function SignUp() {
       firstName: formData.get('firstName'),
       lastName: formData.get('lastName')
     });
-    const response = await fetch('http://localhost:8000/api/user/register', {
+    const response = await fetch('http://18.144.133.195:8000/api/user/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

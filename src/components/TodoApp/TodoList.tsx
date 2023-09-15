@@ -14,12 +14,12 @@ interface TabPanelProps {
 }
   
 
-function a11yProps(index: number) {
-    return {
-      id: `simple-tab-${index}`,
-      'aria-controls': `simple-tabpanel-${index}`,
-    };
-}
+// function a11yProps(index: number) {
+//     return {
+//       id: `simple-tab-${index}`,
+//       'aria-controls': `simple-tabpanel-${index}`,
+//     };
+// }
 
 function CustomTabPanel(props: TabPanelProps) {
     const { children, value, index, ...other } = props;
@@ -44,15 +44,15 @@ function CustomTabPanel(props: TabPanelProps) {
 export default function TodoList(
     {
         todos, 
-        onChangeTodo,
-        onDeleteTodo,
+        // onChangeTodo,
+        // onDeleteTodo,
         updateTodosData,
         showPriority
     }:
     {
         todos: Todo[],
-        onChangeTodo: (todo: Todo) => void,
-        onDeleteTodo: (todo: Todo) => void,
+        // onChangeTodo: (todo: Todo) => void,
+        // onDeleteTodo: (todo: Todo) => void,
         updateTodosData: () => void,
         showPriority: number
     }
@@ -61,6 +61,7 @@ export default function TodoList(
     const [value, setValue] = useState(0);
 
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+      event.preventDefault();
       setValue(newValue);
     };
 
@@ -76,18 +77,10 @@ export default function TodoList(
             <CustomTabPanel value={value} index={0}>
                 <TableContainer component={Paper} >
                     <Table size='small'>
-                        {/* <TableHead>
-                            <TableRow>
-                                <TableCell align='center'></TableCell>
-                                <TableCell align='center'></TableCell>
-                                <TableCell align='center'></TableCell>
-                                <TableCell align='center'></TableCell>
-                            </TableRow>
-                        </TableHead> */}
                         {
                             todos.map((todo, index) => (
                                 showPriority === 0 || showPriority === todo.priority ? (
-                                    <TodoItem updateTodosData={updateTodosData}key={index} todo={todo} todoStatus={'all'}/>
+                                    <TodoItem updateTodosData={updateTodosData} key={index} todo={todo} todoStatus={'all'}/>
                                 ) : <></>
                             ))
                         }
@@ -100,7 +93,7 @@ export default function TodoList(
                         {
                             todos.map((todo, index) => (
                                 showPriority === 0 || showPriority === todo.priority ? (
-                                    <TodoItem updateTodosData={updateTodosData}key={index} todo={todo} todoStatus={'todo'}/>
+                                    <TodoItem updateTodosData={updateTodosData} key={index} todo={todo} todoStatus={'todo'}/>
                                 ) : <></>
                             ))
                         }
@@ -113,7 +106,7 @@ export default function TodoList(
                         {
                             todos.map((todo, index) => (
                                 showPriority === 0 || showPriority === todo.priority ? (
-                                    <TodoItem updateTodosData={updateTodosData}key={index} todo={todo} todoStatus={'done'}/>
+                                    <TodoItem updateTodosData={updateTodosData} key={index} todo={todo} todoStatus={'done'}/>
                                 ) : <></>
                             ))
                         }

@@ -31,26 +31,26 @@ export default function TodoApp() {
     });
   }
 
-  function handleChangeTodo(todo: Todo) {
-    dispatch({
-      type: 'changed',
-      todo: todo,
-    });
-  }
+  // function handleChangeTodo(todo: Todo) {
+  //   dispatch({
+  //     type: 'changed',
+  //     todo: todo,
+  //   });
+  // }
 
-  function handleDeleteTodo(todo: Todo) {
-    dispatch({
-      type: 'deleted',
-      todo: todo
-    });
-  }
+  // function handleDeleteTodo(todo: Todo) {
+  //   dispatch({
+  //     type: 'deleted',
+  //     todo: todo
+  //   });
+  // }
 
-  function updateTodoList(todo: Todo){
-    dispatch({
-      type: 'updated', 
-      todo: todo
-    })
-  }
+  // function updateTodoList(todo: Todo){
+  //   dispatch({
+  //     type: 'updated', 
+  //     todo: todo
+  //   })
+  // }
 
   const loadTodosData = async () => {
     
@@ -59,7 +59,7 @@ export default function TodoApp() {
       todo: {id: 0, description: '', done: false, priority: 0}
     })
 
-    const response = await fetch('http://localhost:8000/api/todos/getTodos', {
+    const response = await fetch('http://18.144.133.195:8000/api/todos/getTodos', {
       method: 'GET', 
       headers: {
         'Content-Type': 'application/json',
@@ -117,8 +117,8 @@ export default function TodoApp() {
       </Box>
       <TodoList
         todos={todos}
-        onChangeTodo={handleChangeTodo}
-        onDeleteTodo={handleDeleteTodo}
+        // onChangeTodo={handleChangeTodo}
+        // onDeleteTodo={handleDeleteTodo}
         updateTodosData={loadTodosData}
         showPriority={showPriorities}
       />

@@ -1,4 +1,4 @@
-import { Button, Checkbox, IconButton, MenuItem, Table, TableCell, TableRow, TextField } from "@mui/material";
+import { Checkbox, IconButton, MenuItem, TableCell, TableRow, TextField } from "@mui/material";
 import { Todo } from "../../types/todo";
 import React, { useState } from "react";
 import CreateIcon from '@mui/icons-material/Create';
@@ -11,7 +11,7 @@ export default function TodoItem({todo, todoStatus, updateTodosData}: {todo: Tod
 
     const handleChangeIsChecked = async () => {   
         const changeIsCheckedStatus = async () => {
-            const response = await fetch(`http://localhost:8000/api/todos/editTodo?id=${todo.id}`, {
+            const response = await fetch(`http://18.144.133.195:8000/api/todos/editTodo?id=${todo.id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -31,7 +31,7 @@ export default function TodoItem({todo, todoStatus, updateTodosData}: {todo: Tod
     }
 
     const updateTodoDescription = async () => {
-        const response = await fetch(`http://localhost:8000/api/todos/editTodo?id=${todo.id}`, {
+        const response = await fetch(`http://18.144.133.195:8000/api/todos/editTodo?id=${todo.id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
