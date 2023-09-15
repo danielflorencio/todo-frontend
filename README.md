@@ -14,7 +14,7 @@ E só para que fique claro, este projeto ainda está longe de estar completo.
 
 Por questões de tempo, não pude refatorar algumas coisas que sei que poderiam estar melhor no código, nem realizar o deploy do frontend da aplicação, já que sei que alguns bugs de configuração no projeto irão demorar um certo tempo para poderem ser consertados, porém, sei que pude demonstrar bastante certas habilidades.
 
-Desde podendo fazer o CRUD completo da aplicação no frontend, quanto no frontend, e realizando o deploy do backend em um ambiente Linux na plataforma da Amazon.
+Desde podendo fazer o CRUD completo da aplicação no frontend, quanto no backend, e realizando o deploy do backend em um ambiente Linux na plataforma da Amazon.
 
 Sem mais enrolação, vamos às informações relevantes: 
 
