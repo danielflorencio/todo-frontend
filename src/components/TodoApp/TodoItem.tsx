@@ -2,6 +2,7 @@ import { Checkbox, IconButton, MenuItem, TableCell, TableRow, TextField } from "
 import { Todo } from "../../types/todo";
 import React, { useState } from "react";
 import CreateIcon from '@mui/icons-material/Create';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 export default function TodoItem({todo, todoStatus, updateTodosData}: {todo: Todo, todoStatus: string, updateTodosData: () => void}){
     
@@ -65,7 +66,21 @@ export default function TodoItem({todo, todoStatus, updateTodosData}: {todo: Tod
             setDescriptionMode('show');
         }
     }
-    
+
+    const handleDeleteItem = async () => {
+        console.log('TODO ID TO BE DELETED: ', todo.id)
+        const response = await fetch(`http://18.144.133.195:8000/api/todos/delete?id=${todo.id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'authorization': `${localStorage.getItem('token')}`
+            }
+        });
+        console.log('response on Delete Item: ', response)
+        if(response.ok){
+            await updateTodosData();
+        }
+    }
     
     if(todoStatus === 'all'){
         return(
@@ -94,6 +109,11 @@ export default function TodoItem({todo, todoStatus, updateTodosData}: {todo: Tod
                         <CreateIcon></CreateIcon>
                     </IconButton>
                     </TableCell>
+                    <TableCell align='right'>
+                            <IconButton onClick={() => handleDeleteItem()}>
+                                <DeleteIcon></DeleteIcon>
+                            </IconButton>
+                            </TableCell>
                     <TableCell align='right'>
                         <TextField
                         select
@@ -140,6 +160,11 @@ export default function TodoItem({todo, todoStatus, updateTodosData}: {todo: Tod
                             </IconButton>
                             </TableCell>
                             <TableCell align='right'>
+                            <IconButton onClick={() => handleDeleteItem()}>
+                                <DeleteIcon></DeleteIcon>
+                            </IconButton>
+                            </TableCell>
+                            <TableCell align='right'>
                                 <TextField
                                 select
                                 value={priority}
@@ -168,7 +193,11 @@ export default function TodoItem({todo, todoStatus, updateTodosData}: {todo: Tod
                                 <Checkbox checked={todo.done} value={todo.done} onClick={() => handleChangeIsChecked()}/>
                             </TableCell>
                             <TableCell align='center'>{todo.description}</TableCell>
-
+                            <TableCell align='right'>
+                            <IconButton onClick={() => handleDeleteItem()}>
+                                <DeleteIcon></DeleteIcon>
+                            </IconButton>
+                            </TableCell>
                             <TableCell align='right'>
                                 <TextField
                                 disabled

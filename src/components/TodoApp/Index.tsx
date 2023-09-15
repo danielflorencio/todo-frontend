@@ -107,7 +107,7 @@ export default function TodoApp() {
       <Box sx={{sm: {width: '100%'}, md: {width: '400px'}}}>
       <Typography variant='h4' sx={{textAlign: 'center'}}>Painel de Tarefas</Typography>
       <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'center', paddingTop: 4, gap: 2}}>
-        <AddTodo onAddTask={handleAddTodo} />
+        <AddTodo updateTodosData={loadTodosData} />
         <TextField value={showPriorities} onChange={(e) => setShowPriorities(Number(e.target.value))} sx={{width: 'fit-content'}} size='small' select label='Show priorities'>
           <MenuItem value={0}>Show all</MenuItem>
           <MenuItem value={1}>Show high</MenuItem>

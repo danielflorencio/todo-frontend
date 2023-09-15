@@ -1,13 +1,15 @@
 import { useState } from "react";
-import { Todo } from "../../types/todo"
+// import { Todo } from "../../types/todo"
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, MenuItem, TextField } from "@mui/material";
 
 export default function AddTodo(
     {
-        onAddTask
+        // onAddTask,
+        updateTodosData
     }:
     {
-        onAddTask: (newTodo: Todo) => void
+        // onAddTask: (newTodo: Todo) => void,
+        updateTodosData: () => void,
     }
 ){
 
@@ -41,16 +43,17 @@ export default function AddTodo(
             })
 
             if(response.ok){
-            const data = await response.json();
+            // const data = await response.json();
             
-            const newTodoToBeAdded: Todo = {
-                id: data.todo.task_id, 
-                description: todoDescriptionInput,
-                done: false,
-                priority: data.todo.priority
-            }
+            // const newTodoToBeAdded: Todo = {
+            //     id: data.todo.task_id, 
+            //     description: todoDescriptionInput,
+            //     done: false,
+            //     priority: data.todo.priority
+            // }
 
-            onAddTask(newTodoToBeAdded);
+            // onAddTask(newTodoToBeAdded);
+            updateTodosData();
             setTodoDescriptionInput('');
             setOpen(false);
         } 
