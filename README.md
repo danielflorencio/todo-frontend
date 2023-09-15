@@ -59,3 +59,13 @@ Sem mais enrolação, vamos às informações relevantes:
 É importante notar, que você precisa se cadastrar para poder acessar as funcionalidades. 
 
 Então, quando visualizar a página de sign-up, você deve realizar o cadastro, depois utilizar os mesmos dados do cadastro na página de login.
+
+### Informações extras
+
+Se por via de curiosidades você tiver ficado curioso para dar uma olhada na API, aqui está o link do repositório: 
+
+https://github.com/danielflorencio/todo-backend 
+
+API realizada utilizando TypeScript, Node Js, Express JS, e utilizando o PostgreSQL como banco de dados. 
+
+PS.: O Código que está em produção na AWS teve algumas alterações e não está exatamente igual no repositório, por questões de variáveis de ambiente, CORS, configurações de ambiente de produção e entre outras. 
