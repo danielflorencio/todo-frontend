@@ -12,14 +12,6 @@ interface TabPanelProps {
     index: number;
     value: number;
 }
-  
-
-// function a11yProps(index: number) {
-//     return {
-//       id: `simple-tab-${index}`,
-//       'aria-controls': `simple-tabpanel-${index}`,
-//     };
-// }
 
 function CustomTabPanel(props: TabPanelProps) {
     const { children, value, index, ...other } = props;

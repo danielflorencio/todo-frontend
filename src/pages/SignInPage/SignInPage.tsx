@@ -14,19 +14,6 @@ import { useAppDispatch } from '../../hooks';
 import { registerLoggedUserState } from '../../features/sessionControl/sessionSlice';
 import  { useNavigate}  from 'react-router-dom';
 
-// function Copyright(props: any) {
-//   return (
-//     <Typography variant="body2" color="text.secondary" align="center" {...props}>
-//       {'Copyright © '}
-//       <Link color="inherit" href="https://mui.com/">
-//         Your Website
-//       </Link>{' '}
-//       {new Date().getFullYear()}
-//       {'.'}
-//     </Typography>
-//   );
-// }
-
 const theme = createTheme();
 
 export default function SignIn() {
@@ -40,7 +27,7 @@ export default function SignIn() {
     console.log('handle submit being called.');
     console.log('Data being sent by SignInPage - email: ', email, ' password: ', password);
 
-    const response = await fetch('http://18.144.133.195:8000/api/user/login', {
+    const response = await fetch('http://localhost:8000/api/user/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -108,10 +95,6 @@ export default function SignIn() {
               value={password}
               onChange={(e) => {setPassword(e.target.value)}}
             />
-            {/* <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            /> */}
             <Button
               type="submit"
               fullWidth
@@ -121,11 +104,6 @@ export default function SignIn() {
               Sign In
             </Button>
             <Grid container>
-              <Grid item xs>
-                {/* <Link href="#" variant="body2">
-                  Forgot password?
-                </Link> */}
-              </Grid>
               <Grid item>
                 <Link href="/sign-up" variant="body2">
                   {"Don't have an account? Sign Up"}
@@ -134,7 +112,6 @@ export default function SignIn() {
             </Grid>
           </Box>
         </Box>
-        {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}
       </Container>
     </ThemeProvider>
     </Suspense>

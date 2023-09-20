@@ -59,7 +59,7 @@ export default function TodoApp() {
       todo: {id: 0, description: '', done: false, priority: 0}
     })
 
-    const response = await fetch('http://18.144.133.195:8000/api/todos/getTodos', {
+    const response = await fetch('http://localhost:8000/api/todos/getTodos', {
       method: 'GET', 
       headers: {
         'Content-Type': 'application/json',

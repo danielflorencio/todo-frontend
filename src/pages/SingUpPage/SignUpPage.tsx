@@ -13,19 +13,6 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { UserData } from '../../types/userData';
 import { useNavigate } from 'react-router-dom';
 
-// function Copyright(props: any) {
-//     return (
-//     <Typography variant="body2" color="text.secondary" align="center" {...props}>
-//       {'Copyright © '}
-//       <Link color="inherit" href="https://mui.com/">
-//         Your Website
-//       </Link>{' '}
-//       {new Date().getFullYear()}
-//       {'.'}
-//     </Typography>
-//   );
-// }
-
 const theme = createTheme();
 
 export default function SignUp() {
@@ -42,7 +29,7 @@ export default function SignUp() {
       firstName: formData.get('firstName'),
       lastName: formData.get('lastName')
     });
-    const response = await fetch('http://18.144.133.195:8000/api/user/register', {
+    const response = await fetch('http://localhost:8000/api/user/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -55,7 +42,6 @@ export default function SignUp() {
       })
     })
     const data = await response.json()
-    console.log('response: ', response)
     if(response.ok){
       window.location.href = '/login'
     }else if(data.message === "Email already in use.") {
@@ -63,7 +49,6 @@ export default function SignUp() {
     } else{
       alert('There was an error while trying to register the user.')
     }
-    console.log('data: ', data)
   };
 
   const navigateToPage = async (url: string) => {
@@ -141,12 +126,6 @@ export default function SignUp() {
                   onChange={(e) => setUserData({ ...userData, password: e.target.value })}
                 />
               </Grid>
-              <Grid item xs={12}>
-                {/* <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="I want to receive inspiration, marketing promotions and updates via email."
-                /> */}
-              </Grid>
             </Grid>
             <Button
               type="submit"
@@ -165,7 +144,6 @@ export default function SignUp() {
             </Grid>
           </Box>
         </Box>
-        {/* <Copyright sx={{ mt: 5 }} /> */}
       </Container>
     </ThemeProvider>
     </Suspense>

@@ -12,7 +12,7 @@ export default function TodoItem({todo, todoStatus, updateTodosData}: {todo: Tod
 
     const handleChangeIsChecked = async () => {   
         const changeIsCheckedStatus = async () => {
-            const response = await fetch(`http://18.144.133.195:8000/api/todos/editTodo?id=${todo.id}`, {
+            const response = await fetch(`http://localhost:8000/api/todos/editTodo?id=${todo.id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -32,7 +32,7 @@ export default function TodoItem({todo, todoStatus, updateTodosData}: {todo: Tod
     }
 
     const updateTodoDescription = async () => {
-        const response = await fetch(`http://18.144.133.195:8000/api/todos/editTodo?id=${todo.id}`, {
+        const response = await fetch(`http://localhost:8000/api/todos/editTodo?id=${todo.id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -69,7 +69,7 @@ export default function TodoItem({todo, todoStatus, updateTodosData}: {todo: Tod
 
     const handleDeleteItem = async () => {
         console.log('TODO ID TO BE DELETED: ', todo.id)
-        const response = await fetch(`http://18.144.133.195:8000/api/todos/delete?id=${todo.id}`, {
+        const response = await fetch(`http://18.144.133.195:8000/localhost/delete?id=${todo.id}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
