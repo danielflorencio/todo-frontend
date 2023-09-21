@@ -1,6 +1,6 @@
 ## Todo-list em React
 
-Este é um projeto de um simples projeto de lista de tarefas desenvolvido em React, criado como parte do desafio técnico para o processo seletivo de desenvolvedor júnior. 
+Este é um projeto simples de lista de tarefas desenvolvido em React, criado como parte do desafio técnico para um processo seletivo de desenvolvedor júnior. 
 
 O objetivo deste projeto é avaliar a compreensão básica do React, a capacidade de criar interfaces de usuário, e a integração com recursos externos, como APIs. 
 
